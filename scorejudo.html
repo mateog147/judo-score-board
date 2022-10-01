@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>scorejudo</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="ScoreJudo version 5.32 Copyright (C) Campbell Dunstan 2010-2017"
+    />
+    <link rel="stylesheet" href="./css/style.css" />
+    <script src="./js/main.js"></script>
+  </head>
+
+  <body id="scorebody" onload="dbinit()">
+    <header class="header">
+      <div class="mat-container button-container">
+        <div class="increase-decrease-container">
+          <a class="greylink" onclick="changemat(1)" title="Increase"
+            ><span class="increase-btn">+</span></a
+          >
+          <a class="greylink" onclick="changemat(0)" title="Decrease"
+            ><span class="decrease-btn">-</span></a
+          >
+        </div>
+
+        <div class="greyinfo" id="matnum">Tatami 1</div>
+      </div>
+
+      <h2 class="event-title greyinfo" id="welcome_msg">Judo Score Board</h2>
+
+      <div class="bout-container button-container">
+        <div class="greyinfo" id="matchnum">Shiai 1</div>
+        <div class="increase-decrease-container">
+          <a class="greylink" onclick="changematch(1)" title="Increase"
+            ><span class="increase-btn">+</span></a
+          >
+          <a class="greylink" onclick="changematch(0)" title="Decrease"
+            ><span class="decrease-btn">-</span></a
+          >
+        </div>
+      </div>
+    </header>
+
+    <div class="info-container score-info-container" id="white__panel">
+      <div class="player-selector-container">
+        <select id="whiteplayername" name="wplayer" class="whiteplayer">
+          <option>Player 1</option>
+          <option>Player 2</option>
+        </select>
+      </div>
+      <div class="score-container">
+        <div class="whitelabel">
+          <a
+            class="whitelinkbare"
+            title="Subtract 1 Ippon"
+            onclick="changescore('whiteippon',0)"
+            ><span class="decrease-btn">-</span></a
+          >Ippon
+          <a
+            class="whitelinkbare"
+            title="Add an Ippon"
+            onclick="changescore('whiteippon',1)"
+            ><span class="increase-btn">+</span></a
+          >
+        </div>
+        <h2
+          class="whitescore"
+          title="Click for Ippon"
+          id="whiteippon"
+          onclick="changescore('whiteippon',1)"
+        >
+          0
+        </h2>
+      </div>
+      <div class="score-container">
+        <div class="whitelabel">
+          <a
+            class="whitelinkbare"
+            title="Subtract 1 Wazari"
+            onclick="changescore('whitewazari',0)"
+            ><span style="font-size: 180%; font-weight: bold">-</span></a
+          >Wazari
+          <a
+            class="whitelinkbare"
+            title="Add 1 Wazari"
+            onclick="changescore('whitewazari',1)"
+            ><span style="font-size: 130%; font-weight: bold">+</span></a
+          >
+        </div>
+        <div
+          class="whitescore"
+          title="Click for Wazari"
+          id="whitewazari"
+          onclick="changescore('whitewazari',1)"
+        >
+          0
+        </div>
+      </div>
+      <div class="penalty-container">
+        <a
+          class="whitelinkbare"
+          onclick="changepenalty('whitepenalty',0)"
+          title="Subtract 1 Shido"
+          ><span class="decrease-btn">-</span></a
+        >Shido
+        <a
+          class="whitelinkbare"
+          onclick="changepenalty('whitepenalty',1)"
+          title="Add 1 Shido"
+          ><span class="increase-btn">+</span></a
+        >
+        <h2
+          class="bluepenalty"
+          id="whitepenalty"
+          onclick="changepenalty('whitepenalty',1)"
+          title="Shido"
+        >
+          0
+        </h2>
+      </div>
+    </div>
+
+    <div
+      class="info-container score-info-container bluebandcontainer"
+      id="blue__panel"
+    >
+      <div class="player-selector-container">
+        <select id="blueplayername" name="bplayer" class="blueplayer">
+          <option>Player 1</option>
+          <option>Player 2</option>
+        </select>
+      </div>
+      <div class="score-container">
+        <div class="bluelabel">
+          <a
+            class="bluelinkbare"
+            title="Subtract 1 Ippon"
+            onclick="changescore('blueippon',0)"
+            ><span class="decrease-btn">-</span></a
+          >Ippon
+          <a
+            class="bluelinkbare"
+            title="Add 1 Ippon"
+            onclick="changescore('blueippon',1)"
+            ><span class="increase-btn">+</span></a
+          >
+        </div>
+        <h2
+          class="bluescore score"
+          title="Click for Ippon"
+          id="blueippon"
+          onclick="changescore('blueippon',1)"
+        >
+          0
+        </h2>
+      </div>
+      <div class="score-container">
+        <div class="bluelabel">
+          <a
+            class="bluelinkbare"
+            title="Subtract 1 Wazari"
+            onclick="changescore('bluewazari',0)"
+            ><span class="decrease-btn">-</span></a
+          >Wazari
+          <a
+            class="bluelinkbare"
+            title="Add 1 Wazari"
+            onclick="changescore('bluewazari',1)"
+            ><span class="increase-btn">+</span></a
+          >
+        </div>
+        <h2
+          class="bluescore score"
+          title="Click for Wazari"
+          id="bluewazari"
+          onclick="changescore('bluewazari',1)"
+        >
+          0
+        </h2>
+      </div>
+      <div class="penalty-container">
+        <a
+          class="bluelinkbare"
+          onclick="changepenalty('bluepenalty',0)"
+          title="Subtract 1 Shido"
+          ><span class="decrease-btn">-</span></a
+        >Shido
+        <a
+          class="bluelinkbare"
+          onclick="changepenalty('bluepenalty',1)"
+          title="Add 1 Shido"
+          ><span class="increase-btn">+</span></a
+        >
+        <h2
+          class="bluepenalty"
+          id="bluepenalty"
+          onclick="changepenalty('bluepenalty',1)"
+          title="Shido"
+        >
+          0
+        </h2>
+      </div>
+    </div>
+
+    <div class="info-container time-controls-container">
+      <div class="controls-container">
+        <a
+          class="greenlink resetall"
+          onclick="resetAll()"
+          title="Reset clock &amp; scores"
+          >Reset ALL</a
+        >
+        &nbsp; &nbsp; &nbsp;
+        <a
+          class="greenlink"
+          onclick="force_bell()"
+          title="Manually ring bell for any reason, no stop no reset"
+          >Bell</a
+        >
+        <br />
+        <br />
+        <a
+          class="greenlink"
+          id="setgold"
+          onclick="resetGoldScore(1)"
+          title="Reset clock only, for golden score."
+          >Reset for Golden Score</a
+        >
+        <br />
+        <br />
+        <span>Minutes&nbsp;</span
+        ><a
+          class="greenlink"
+          id="min_2"
+          onclick="setdefaultmatch('2:00',2,0)"
+          title="Set default Match duration to 2 minutes"
+          >2</a
+        >
+        <a
+          class="greenlink"
+          id="min_3"
+          onclick="setdefaultmatch('3:00',3,0)"
+          title="Set default Match duration to 3 minutes"
+          >3</a
+        >
+        <a
+          class="greenlink"
+          id="min_4"
+          onclick="setdefaultmatch('4:00',4,0)"
+          title="Set default Match duration to 4 minutes"
+          >4</a
+        >
+        <a
+          class="greenlink"
+          id="min_5"
+          onclick="setdefaultmatch('5:00',5,0)"
+          title="Set default Match duration to 5 minutes"
+          >5</a
+        >
+      </div>
+
+      <div class="main-clock-container">
+        <h4 class="goldenscore_GS" id="goldenscore">&nbsp;</h4>
+        <h2 class="mainclock" id="mainclock" onclick="gotoclockoptions()">
+          4:00
+        </h2>
+      </div>
+
+      <div class="osaekomi-container">
+        <a
+          class="greenlink"
+          onclick="globalholddown()"
+          id="globalholddownswitch"
+          >Osaekomi</a
+        >
+        <a class="greenlink" onclick="resetOsae(3)" id="resetswitch">Reset</a>
+        <div
+          class="globalosaekomiwhichplayerwrap"
+          id="globalosaekomiwhichplayerwrap"
+          onclick="nominateosaetori()"
+        >
+          <div
+            title="click to flag WHITE as Tori"
+            class="globalosaekomitoriwhite"
+            id="globalosaekomitoriwhite"
+            onclick="nominateosaetori(0)"
+          ></div>
+          <h4
+            class="globalosaekomitoriprompt"
+            id="globalosaekomitoriprompt"
+            onclick="resettoriprompt()"
+          >
+            «« Tori ? »»
+          </h4>
+          <div
+            title="click to flag BLUE (red) asTori"
+            class="globalosaekomitoriblue"
+            id="globalosaekomitoriblue"
+            onclick="nominateosaetori(1)"
+          ></div>
+        </div>
+        <h2
+          title="click to Start-Stop"
+          class="globalosaekomi"
+          id="globalosaekomi"
+          onclick="globalholddown()"
+        >
+          0
+        </h2>
+      </div>
+
+      <div class="hajime-mate-container">
+        <div
+          class="hajime"
+          id="hajimeswitch"
+          onclick="hajime_matte()"
+          title="Start-Stop (use Space Bar)"
+        >
+          Hajime
+        </div>
+        <div style="clear: both; height: 4px"></div>
+        <div
+          class="hajime sonomama"
+          id="globalfreezeswitch"
+          onclick="globalfreeze()"
+          title="Toggle Sonomama - Yoshi"
+        >
+          Sonomama
+        </div>
+      </div>
+    </div>
+
+    <table id="bottommarker" title=" " style="width: 100%">
+      <tbody>
+        <tr>
+          <td
+            style="background-color: #dddddd; border-bottom: 4px solid #eaeaea"
+          >
+            <h1>
+              ~~~~~~  &nbsp; &nbsp;
+              <span style="font-size: 80%">Ver @mateog147</span> &nbsp;
+              <span style="font-size: 60%">(Last updated: 07 Oct 2022)</span>
+              &nbsp; ~~~~~~
+            </h1>
+          </td>
+        </tr>
+        <tr>
+          <td
+            id="download_intruct"
+            class="preference-td"
+            style="display: block; background-color: rgb(234, 234, 234)"
+          >
+            <div class="preference-head">
+              Download and run ScoreJudo even when off-line
+            </div>
+            <div style="text-align: left">
+              Mostly you will want to run ScoreJudo not as an internet dependent
+              webpage but as a local webpage stored on your laptop or a memory
+              stick and ready to run anywhere, whether or not the internet is
+              available. Accordingly this webpage contains ALL the resources
+              necessary in a single HTML file with no external dependencies
+              which you can save and run locally. To do so follow these steps .
+              . .
+              <ul>
+                <li>
+                  <b>Firefox</b> users, from your browser`s FILE menu (or
+                  right-click your mouse) select SAVE PAGE AS, then when the
+                  file dialog appears, select file type of WEB PAGE COMPLETE.
+                  make sure the file name is scorejudo.html, NOT scorejudo.htm
+                </li>
+                <li>
+                  <b>Internet Explorer</b> users, from your browser`s FILE menu
+                  select SAVE AS, then when the file dialog appears, select file
+                  type of WEB PAGE COMPLETE. make sure the file name is
+                  scorejudo.html, NOT scorejudo.htm
+                </li>
+                <li>
+                  <b>Chrome</b> users, right-click your mouse and select SAVE
+                  AS, then when the file dialog appears, select file type of WEB
+                  PAGE COMPLETE. make sure the file name is scorejudo.html, NOT
+                  scorejudo.htm
+                </li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="preference-td" style="background-color: #dddddd">
+            <div class="preference-head">Welcome Message Banner</div>
+            <p>&nbsp;</p>
+            <span style="color: #000000"
+              >Enter text for the top welcome banner here then click OK</span
+            >
+            <form name="updatewelcome">
+              <label for="welcome_input">&nbsp;</label>
+              <input
+                id="welcome_input"
+                name="welcometext"
+                type="text"
+                size="56"
+                value="Your welcome message here"
+                onfocus="enableSpacekey()"
+                onblur="disableSpacekey()"
+              />
+              <input
+                type="submit"
+                name="sendwelcome"
+                value="Ok"
+                onclick="update_welcome(); return false;"
+              />
+            </form>
+          </td>
+        </tr>
+
+        <tr id="osaekomi_auto">
+          <td class="preference-td" style="background-color: #eaeaea">
+            <div class="preference-head">Osaekomi Times &amp; Auto Scoring</div>
+            <table style="border-collapse: separate; border-spacing: 10px">
+              <tbody>
+                <tr>
+                  <td>Stop Osekomi clock at (Ippon earned)</td>
+                  <td id="autoscore_ippon_2">
+                    <select
+                      name="setOKomiFT"
+                      id="setOKomiFT"
+                      onchange="setOsaeKomiScoring('setOKomiFT','i')"
+                    >
+                      <option value="10">10 Seconds</option>
+                      <option value="15">15 Seconds</option>
+                      <option selected="" value="20">20 Seconds</option>
+                      <option value="25">25 Seconds</option>
+                      <option value="30">30 Seconds</option>
+                      <option value="35">35 Seconds</option>
+                    </select>
+                  </td>
+                  <td>&nbsp;</td>
+                  <td>
+                    <a style="color: #0000ff">Back&nbsp;↑</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <table style="border-collapse: separate; border-spacing: 10px">
+              <tbody>
+                <tr>
+                  <td>Auto Scoring</td>
+                  <td>
+                    <select
+                      name="setOKomiAutoScore"
+                      id="setOKomiAutoScore"
+                      onchange="setOsaeKomiScoring('setOKomiAutoScore','a')"
+                    >
+                      <option selected="" value="0">
+                        Do NOT auto-score on hold downs
+                      </option>
+                      <option value="1">
+                        Auto score as hold-downs progress
+                      </option>
+                    </select>
+                  </td>
+                  <td class="novisi" id="autoscore_ippon_1">
+                    Ippon at [see above] &nbsp;
+                  </td>
+                  <td
+                    class="novisi"
+                    id="autoscore_wazari_1"
+                    style="visibility: hidden"
+                  >
+                    Wazari at
+                  </td>
+                  <td
+                    class="novisi"
+                    id="autoscore_wazari_2"
+                    style="visibility: hidden"
+                  >
+                    <select
+                      name="setOKomiWa"
+                      id="setOKomiWa"
+                      onchange="setOsaeKomiScoring('setOKomiWa','w')"
+                    >
+                      <option value="10">10 Seconds</option>
+                      <option selected="" value="15">15 Seconds</option>
+                      <option value="20">20 Seconds</option>
+                      <option value="25">25 Seconds</option>
+                    </select>
+                  </td>
+                  <td
+                    class="novisi"
+                    id="autoscore_yuko_1"
+                    style="visibility: hidden"
+                  >
+                    Yuko (if applic.) at
+                  </td>
+                  <td
+                    class="novisi"
+                    id="autoscore_yuko_2"
+                    style="visibility: hidden"
+                  >
+                    <select
+                      name="setOKomiYu"
+                      id="setOKomiYu"
+                      onchange="setOsaeKomiScoring('setOKomiYu','y')"
+                    >
+                      <option value="5">5 Seconds</option>
+                      <option selected="" value="10">10 Seconds</option>
+                      <option value="15">15 Seconds</option>
+                      <option value="20">20 Seconds</option>
+                    </select>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div
+              style="
+                padding-left: 20px;
+                text-align: left;
+                color: #aa0000;
+                width: 80%;
+              "
+            >
+              Many referees do not want the scoreboard to presume scores gained
+              as the osaekomi clock ticks, and furthermore non-auto scoring is
+              particularly suitable for Monsters and Special Needs where several
+              Wazari or Ippons are sometimes allowed to encourage full length
+              matches. Setting Auto-Score ON will advance Tori`s score
+              automatically as the clock ticks past each hold-down scoring
+              threshold. Select AUTO SCORE where referees agree to allow the
+              scoreboard to apply the hold-down scoring rules automatically.
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="preference-td" style="background-color: #dddddd">
+            <div class="preference-head">Golden Score Clock</div>
+            <table style="border-collapse: separate; border-spacing: 14px">
+              <tbody>
+                <tr>
+                  <td>
+                    <select
+                      name="manageGoldenScore"
+                      id="manageGoldenScore"
+                      onchange="manage_golden_score('manageGoldenScore')"
+                    >
+                      <option selected="" value="30000">
+                        Let golden score clock run indefinitely (IJF)
+                      </option>
+                      <option value="0">
+                        Stop golden score clock &amp; ring bell at
+                        Half-of-Match-Time
+                      </option>
+                    </select>
+                  </td>
+                  <td>&nbsp;</td>
+                  <td>
+                    <a style="color: #0000ff">Back&nbsp;↑</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div
+              style="
+                float: right;
+                width: 90%;
+                padding-left: 20px;
+                text-align: left;
+                color: #aa0000;
+              "
+            >
+              There are two common conventions with the Golden Score clock -
+              current IJF rules let it run indefinitely, which can on rare
+              occasions see matches run for 10 or 15 minutes or more; and the
+              earlier convention where the golden score clock gives players
+              extra time equal to half of their original match time. Thus a 3
+              minute match time would give 1.5 minutes golden score time, after
+              which Hantai is called.
+            </div>
+          </td>
+        </tr>
+        <tr id="default_matchtimes">
+          <td class="preference-td" style="background-color: #dddddd">
+            <div class="preference-head">DEFAULT Match Time</div>
+            <a
+              class="xgreenlink"
+              id="min_1_2"
+              onclick="setdefaultmatch('1:00',1,0)"
+              title="Set default Match duration to 1 minute"
+              >1 Minute</a
+            >
+            &nbsp; &nbsp;
+            <a
+              class="xgreenlink"
+              id="min_2_2"
+              onclick="setdefaultmatch('2:00',2,0)"
+              title="Set default Match duration to 2 minutes"
+              >2 Minutes</a
+            >
+            &nbsp; &nbsp;
+            <a
+              class="xgreenlink"
+              id="min_3_2"
+              onclick="setdefaultmatch('3:00',3,0)"
+              title="Set default Match duration to 3 minutes"
+              >3 Minutes</a
+            >
+            &nbsp; &nbsp;
+            <a
+              class="xgreenlink"
+              id="min_4_2"
+              onclick="setdefaultmatch('4:00',4,0)"
+              title="Set default Match duration to 4 minutes"
+              >4 Minutes</a
+            >
+            &nbsp; &nbsp;
+            <a
+              class="xgreenlink"
+              id="min_5_2"
+              onclick="setdefaultmatch('5:00',5,0)"
+              title="Set default Match duration to 5 minutes"
+              >5 Minutes</a
+            >
+            &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;<a style="color: #0000ff"
+              >Back&nbsp;↑</a
+            >
+            <p>&nbsp;</p>
+            <div
+              style="
+                padding-left: 20px;
+                text-align: left;
+                color: #aa0000;
+                width: 80%;
+              "
+            >
+              CAUTION - click these only between matches, NEVER during a match.
+              Clicking these default match times also RESETS the scoreboard for
+              new match. To correct a timing error DURING a match, see the QUICK
+              FIX option below. Quick-fixing the clock does not alter the
+              default match duration - it only affects the match currently in
+              progress. <br />These links are also available from the actual
+              scoreboard - (bottom left of scoreboard screen).
+            </div>
+          </td>
+        </tr>
+        <tr id="quickfix">
+          <td class="preference-td" style="background-color: #eaeaea">
+            <div class="preference-head">
+              Quick Fix a time keeping error &nbsp; mid-match only !
+            </div>
+            <div class="preference-subhead">
+              Manually Force MAIN Clock to a particular time, mid match . . .
+            </div>
+            Select desired minutes and seconds:
+            <select id="forceclockmins">
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+            </select>
+            <span style="font-weight: bold; font-size: 120%">:</span>
+            <select id="forceclocksecs">
+              <option value="00">00</option>
+              <option value="01">01</option>
+              <option value="02">02</option>
+              <option value="03">03</option>
+              <option value="04">04</option>
+              <option value="05">05</option>
+              <option value="06">06</option>
+              <option value="07">07</option>
+              <option value="08">08</option>
+              <option value="09">09</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+              <option value="12">12</option>
+              <option value="13">13</option>
+              <option value="14">14</option>
+              <option value="15">15</option>
+              <option value="16">16</option>
+              <option value="17">17</option>
+              <option value="18">18</option>
+              <option value="19">19</option>
+              <option value="20">20</option>
+              <option value="21">21</option>
+              <option value="22">22</option>
+              <option value="23">23</option>
+              <option value="24">24</option>
+              <option value="25">25</option>
+              <option value="26">26</option>
+              <option value="27">27</option>
+              <option value="28">28</option>
+              <option value="29">29</option>
+              <option value="30">30</option>
+              <option value="31">31</option>
+              <option value="32">32</option>
+              <option value="33">33</option>
+              <option value="34">34</option>
+              <option value="35">35</option>
+              <option value="36">36</option>
+              <option value="37">37</option>
+              <option value="38">38</option>
+              <option value="39">39</option>
+              <option value="40">40</option>
+              <option value="41">41</option>
+              <option value="42">42</option>
+              <option value="43">43</option>
+              <option value="44">44</option>
+              <option value="45">45</option>
+              <option value="46">46</option>
+              <option value="47">47</option>
+              <option value="48">48</option>
+              <option value="49">49</option>
+              <option value="50">50</option>
+              <option value="51">51</option>
+              <option value="52">52</option>
+              <option value="53">53</option>
+              <option value="54">54</option>
+              <option value="55">55</option>
+              <option value="56">56</option>
+              <option value="57">57</option>
+              <option value="58">58</option>
+              <option value="59">59</option>
+            </select>
+            &nbsp; &nbsp; &nbsp; &nbsp; - then click the update button -
+            <button
+              onclick="force_main_clock('forceclockmins', 'forceclocksecs')"
+            >
+              UPDATE Main Clock</button
+            >&nbsp;&nbsp;<a style="color: #0000ff">Back&nbsp;↑</a>
+          </td>
+        </tr>
+        <tr>
+          <td class="preference-td" style="background-color: #eaeaea">
+            <div class="preference-subhead">
+              Manually Force Osaekomi Clock to a particular time, mid match . .
+              .
+            </div>
+            Select desired seconds:
+            <select id="forceosaeclocksecs">
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+              <option value="12">12</option>
+              <option value="13">13</option>
+              <option value="14">14</option>
+              <option value="15">15</option>
+              <option value="16">16</option>
+              <option value="17">17</option>
+              <option value="18">18</option>
+              <option value="19">19</option>
+              <option value="20">20</option>
+              <option value="21">21</option>
+              <option value="22">22</option>
+              <option value="23">23</option>
+              <option value="24">24</option>
+              <option value="25">25</option>
+            </select>
+            &nbsp; &nbsp; &nbsp; &nbsp; - then click the update button -
+            <button onclick="force_osae_clock('forceosaeclocksecs')">
+              UPDATE Osaekomi Clock</button
+            >&nbsp;&nbsp;<a style="color: #0000ff">Back&nbsp;↑</a>
+            <p>&nbsp;</p>
+            <div
+              style="
+                padding-left: 20px;
+                text-align: left;
+                color: #aa0000;
+                width: 80%;
+              "
+            >
+              Do not FORCE CLOCKS simply to reset in readiness for a new match
+              (use the Minutes and/or Reset links for that). Use FORCE CLOCKS
+              only to correct some error during a match, as in for example the
+              clock was left running while Matte was in force, or a first aid
+              officer was attending, or perhaps was NOT started for some
+              seriously significant amount of time after HAJIME was called.
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="preference-td" style="background-color: #eaeaea">
+            <div class="preference-head">Player Database</div>
+            <table>
+              <tbody>
+                <tr>
+                  <td style="padding: 10px; vertical-align: top">
+                    <textarea
+                      id="playersnames"
+                      rows="24"
+                      style="
+                        width: 300px;
+                        padding-left: 3px;
+                        text-align: left;
+                        background-color: #ffffff;
+                      "
+                      onfocus="enableSpacekey()"
+                      onblur="disableSpacekey()"
+                    ></textarea>
+                    <p>
+                      <a
+                        class="radii"
+                        style="padding: 10px; background-color: #eeeeee"
+                        onclick="updateplayers()"
+                        >Update players list</a
+                      >
+                    </p>
+                  </td>
+                  <td
+                    style="padding: 10px; text-align: left; vertical-align: top"
+                  >
+                    This HTML5 persistent database storage facility may not work
+                    with some versions of Microsoft Internet Explorer due to
+                    reported bug #Q276228 described on Microsofts site at<br />
+                    <a
+                      href="http://support.microsoft.com/kb/276228"
+                      target="_blank"
+                      >support.microsoft.com/kb/276228</a
+                    >
+                    <p>
+                      We suggest you use
+                      <a
+                        href="http://www.mozilla.org/en-US/firefox/new"
+                        target="_blank"
+                        >Firefox</a
+                      >
+                      (any version) or Safari or
+                      <a href="http://www.google.com/chrome" target="_blank"
+                        >Google Chrome</a
+                      >
+                      or any standards compliant browser.
+                    </p>
+                    <h2>How to . . .</h2>
+                    <p>
+                      Add, edit or delete players from this simple list, or
+                      PASTE a block of names from a simple TEXT file (e.g. a
+                      NOTEPAD file) - one player per line, in any order and in
+                      any cASE. &nbsp; Click the
+                      <b>Update Players List</b> button and the list will
+                      automatically be sorted alphabetically and be adjusted for
+                      correct upper-lower case.
+                    </p>
+                    <p>
+                      The dropdown player selection lists in the white and blue
+                      sections of the scoreboard will also be automatically
+                      updated.
+                    </p>
+                    <p>
+                      If you want to transport these names to another computer
+                      you must select ALL, Copy then paste into a text file and
+                      transport that text file. Storage of names on this
+                      computer will only be preserved across numerous sessions
+                      on this particular computer. They do not get stored in
+                      some central location for use on another computer
+                    </p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td
+            id="playerpicker"
+            style="
+              min-height: 80px;
+              text-align: left;
+              padding: 6px;
+              background-color: #eaeaea;
+              font-size: 15px;
+            "
+          >
+            <p>&nbsp;</p>
+          </td>
+        </tr>
+        <tr>
+          <td
+            style="
+              text-align: left;
+              padding: 16px;
+              background-color: #ffffff;
+              font-size: 15px;
+            "
+          >
+    
+            
+            <div id="bell">
+              <audio
+                id="audiotagbell"
+                src="data:audio/mpeg;base64,SUQzAwAAAAAPdlRZRVIAAAALAAAB//4yADAAMQAxAFRQRTEAAAA3AAAB//5NAGkAawBlACAASwBvAGUAbgBpAGcAIABTAG8AdQBuAGQAQgBpAGIAbABlAC4AYwBvAG0AVElUMgAAABUAAAH//lMAaABpAHAAIABCAGUAbABsAENPTU0AAAAkAAABAAAAAAD//lMAbwB1AG4AZABCAGkAYgBsAGUALgBjAG8AbQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA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"
+              ></audio>
+             
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <script>
+      masterstopwatch();
+    </script>
+  </body>
+</html>
