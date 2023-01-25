@@ -402,6 +402,7 @@ function changematch(updown) {
     i = 1;
   }
   document.getElementById("matchnum").innerHTML = "Shiai " + String(i);
+  setNextPlayers(i)
 }
 function legGrab(elid) {
   let legcolor = "#ffaadd";
@@ -574,6 +575,7 @@ function dbinit() {
     document.getElementById("download_intruct").style.display = "block";
   }
   setOsaeKomiScoring("setOKomiAutoScore", "a");
+  setNextPlayers(1)
 }
 function capitalize(str) {
   return str.replace(/\w\S*/g, function (txt) {
@@ -591,7 +593,6 @@ function mysort(arrayname) {
       newarray.push(s);
     }
   }
-  newarray.sort();
   return newarray;
 }
 
@@ -647,6 +648,15 @@ function navigate_to(elid) {
   if (elid == "#pagetop") {
     disableSpacekey();
   }
+}
+
+function setNextPlayers(matchNumber) {
+  let rawnames = localStorage.getItem("allplayers");
+  const players = mysort(rawnames.split("\n"));
+  console.log("players", players);
+  const index = matchNumber + (matchNumber -2)
+  document.getElementById("whiteplayername").value = players[index];
+  document.getElementById("blueplayername").value = players[index +1];
 }
 
 
