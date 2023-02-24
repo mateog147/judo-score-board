@@ -264,8 +264,8 @@
 
       <div class="main-clock-container">
         <h4 class="goldenscore_GS" id="goldenscore">&nbsp;</h4>
-        <h2 class="mainclock" id="mainclock" onclick="gotoclockoptions()">
-          3:00
+        <h2 class="mainclock" id="mainclock" onclick="hajime_matte()">
+          2:00
         </h2>
       </div>
 
@@ -322,14 +322,6 @@
           Hajime
         </div>
         <div style="clear: both; height: 4px"></div>
-        <div
-          class="hajime sonomama"
-          id="globalfreezeswitch"
-          onclick="globalfreeze()"
-          title="Toggle Sonomama - Yoshi"
-        >
-          Sonomama
-        </div>
       </div>
     </div>
 
@@ -422,10 +414,10 @@
                       id="setOKomiAutoScore"
                       onchange="setOsaeKomiScoring('setOKomiAutoScore','a')"
                     >
-                      <option selected="" value="0">
+                      <option  value="0">
                         Do NOT auto-score on hold downs
                       </option>
-                      <option value="1">
+                      <option selected="" value="1">
                         Auto score as hold-downs progress
                       </option>
                     </select>

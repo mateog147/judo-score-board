@@ -57,12 +57,12 @@
 }
 
 .increase-btn{
-    font-size: 130%; 
+    font-size: 150%; 
     font-weight: bold
 }
 
 .decrease-btn{
-    font-size: 180%; 
+    font-size: 200%; 
     font-weight: bold
 }
 
@@ -193,6 +193,7 @@ background-color: #3377ff;
     text-decoration: underline;
     padding-left: 6px;
     padding-right: 6px;
+    font-size: 110%;
 }
 
 .greenlink:hover {
@@ -202,6 +203,7 @@ background-color: #3377ff;
 
 .resetall {
     font-weight: bold;
+    font-size: 26px;
 }
 
 .globalosaekomi {
