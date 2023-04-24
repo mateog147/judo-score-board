@@ -188,6 +188,9 @@ function globalholddown() {
     document.getElementById("globalholddownswitch").innerHTML = "Toketa";
     osaeClockRunning = true;
     centralClockRunning = true;
+    if (document.getElementById("hajimeswitch").innerHTML.trim() == "Hajime") {
+      document.getElementById("hajimeswitch").innerHTML = "Matte";
+    }
   } else {
     document.getElementById("globalholddownswitch").innerHTML = "Osaekomi";
     osaeClockRunning = false;
